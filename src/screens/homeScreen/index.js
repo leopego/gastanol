@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 
-import {
-  View,
-  Text,
-  TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, Keyboard, TouchableWithoutFeedback } from "react-native";
+
+import GasPrice from "../../components/GasPrice";
+
 import { styles } from "./styles";
+import { theme } from "../../utils";
 
 const DismissKeyboard = ({ children }) => {
   return (
@@ -21,11 +19,6 @@ const HomeScreen = () => {
   const [gasolinePrice, setGasolinePrice] = useState(0);
   const [etanolPrice, setEtanolPrice] = useState(0);
 
-  useEffect(() => {
-    console.log("Etanol: ", etanolPrice);
-    console.log("Gasolina", gasolinePrice);
-  }, [gasolinePrice, etanolPrice]);
-
   return (
     <DismissKeyboard>
       <View style={styles.container}>
@@ -34,40 +27,19 @@ const HomeScreen = () => {
         </Text>
 
         <View style={styles.pricesContainer}>
-          <View style={styles.gasContainer}>
-            <View style={styles.gasTitleContainer}>
-              <Text style={styles.gasTitle}>Gasolina</Text>
-            </View>
-
-            <TextInput
-              style={styles.priceText}
-              placeholder="0,00"
-              maxLength={4}
-              keyboardType="numeric"
-              onChangeText={(price) => {
-                setGasolinePrice(price);
-              }}
-            />
-          </View>
+          <GasPrice
+            text="Gasolina"
+            color={theme.colors.orange}
+            handleGasPrice={setGasolinePrice}
+          />
 
           <View style={styles.separator} />
-          <View style={styles.gasContainer}>
-            <View
-              style={[styles.gasTitleContainer, { backgroundColor: "#32D74B" }]}
-            >
-              <Text style={styles.gasTitle}>Etanol</Text>
-            </View>
 
-            <TextInput
-              style={styles.priceText}
-              placeholder="0,00"
-              maxLength={4}
-              keyboardType="numeric"
-              onChangeText={(price) => {
-                setEtanolPrice(price);
-              }}
-            />
-          </View>
+          <GasPrice
+            text="Etanol"
+            color={theme.colors.green}
+            handleGasPrice={setEtanolPrice}
+          />
         </View>
       </View>
     </DismissKeyboard>
